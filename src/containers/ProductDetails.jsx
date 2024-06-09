@@ -6,23 +6,28 @@ import {
   selectedProduct,
   removeSelectedProduct,
 } from "../redux/actions/productActions";
+import { productDetailss } from "../redux/actions/productActions";
+
 const ProductDetails = () => {
 
   const { productId } = useParams();
   let product = useSelector((state) => state.product);
   const { image, title, price, category, description } = product;
   const dispatch = useDispatch();
-  const fetchProductDetail = async (id) => {
-    const response = await axios
-      .get(`https://fakestoreapi.com/products/${id}`)
-      .catch((err) => {
-        console.log("Err: ", err);
-      });
-    dispatch(selectedProduct(response.data));
-  };
+
+  // const fetchProductDetail = async (id) => {
+  //   const response = await axios
+  //     .get(`https://fakestoreapi.com/products/${id}`)
+  //     .catch((err) => {
+  //       console.log("Err: ", err);
+  //     });
+  //   dispatch(selectedProduct(response.data));
+  // };
 
   useEffect(() => {
-    if (productId && productId !== "") fetchProductDetail(productId);
+    if (productId && productId !== "") {
+      dispatch(productDetailss(productId));
+    }
     return () => {
       dispatch(removeSelectedProduct());
     };
